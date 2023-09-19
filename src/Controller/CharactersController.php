@@ -97,8 +97,6 @@ class CharactersController extends AbstractController
                         $this->em->flush();
 
                         return $this->redirectToRoute('characters');
-
-                        dd($character->getImagePath());
                     }
                 }
             } else{
