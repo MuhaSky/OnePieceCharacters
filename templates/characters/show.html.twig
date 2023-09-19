@@ -1,0 +1,36 @@
+{% extends "./base.html.twig" %}
+
+{% block body %}
+    <div class="sm:w-3/5 w-4/5 mx-auto h-screen">
+        <h1 class="pt-20 sm:text-5xl md:text-7xl text-4xl font-bold text-center">
+            Name: {{ character.name }}
+        </h1><br>
+
+
+        <img
+            src="{{ character.imagePath }}"
+            class="rounded-xl shadow-xl mx-auto"
+            alt=""
+        />
+
+        <p class="flex justify-center items-center text-xl py-6">
+            {{ character.description }}
+        </p>
+        
+        <p class="flex justify-center items-center">
+            {{ character.name }} is a {{ character.groupSort }}
+        </p>
+
+        <br><a 
+            href="/edit/{{ character.id }}"
+            class="mx-auto bg-green-500 font-bold py-2 px-4 rounded transition-all hover:bg-green-300">
+            Edit Character
+        </a>
+
+        <a 
+            href="/delete/{{ character.id }}"
+            class="mx-auto bg-red-500 font-bold py-2 px-4 ml-6 rounded transition-all hover:bg-red-300">
+            Delete Character
+        </a>
+    </div>
+{% endblock %}
