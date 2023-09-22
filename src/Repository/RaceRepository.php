@@ -21,9 +21,9 @@ class RaceRepository extends ServiceEntityRepository
         parent::__construct($registry, Race::class);
     }
 
-//    /**
-//     * @return Race[] Returns an array of Race objects
-//     */
+   /**
+    * @return Race[] Returns an array of Race objects
+    */
 //    public function findByExampleField($value): array
 //    {
 //        return $this->createQueryBuilder('r')
@@ -45,4 +45,18 @@ class RaceRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+   
+   public function findOneByIdJoinedToCategory(int $raceId): ?Race
+    {
+        $entityManager = $this->getEntityManager();
+
+        $query = $entityManager->createQuery(
+            'SELECT p, c
+            FROM App\Entity\Characters p
+            INNER JOIN p.name c
+            WHERE p.id = :id'
+        )->setParameter('id', $raceId);
+
+        return $query->getOneOrNullResult();
+    }
 }

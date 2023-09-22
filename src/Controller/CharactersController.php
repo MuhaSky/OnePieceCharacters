@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Form\CharacterFormType;
 use App\Repository\CharactersRepository;
+use App\Repository\raceRepository;
 use App\Entity\Characters;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -13,10 +14,12 @@ use Symfony\Component\HttpFoundation\Request;
 
 class CharactersController extends AbstractController
 {
+    // private $raceRepository;
     private $em;
     private $characterRepository;
     public function __construct(CharactersRepository $characterRepository, EntityManagerInterface $em) 
     {
+        // $this->raceRepository = $raceRepository;
         $this->characterRepository = $characterRepository;
         $this->em = $em;
     }
@@ -40,7 +43,6 @@ class CharactersController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $newCharacter = $form->getData();
-            
             $imagePath = $form->get('imagePath')->getData();
             if ($imagePath) {
                 $newFileName = uniqid() . '-' . $imagePath->guessExtension();
@@ -71,33 +73,33 @@ class CharactersController extends AbstractController
     public function edit($id, Request $request): Response
     {
         $character = $this->characterRepository->find($id);
+        $race = $character->getRaces();
         $form = $this->createForm(CharacterFormType::class, $character);
         
         $form->handleRequest($request);
         $imagePath = $form->get('imagePath')->getData();
 
         if ($form->isSubmitted() && $form->isValid()) {
-            if ($imagePath) {
-                if ($character->getImagePath() !== null) {
-                    if (file_exists($this->getParameter('kernel.project_dir') . '/public' . $character->getImagePath())) {
-                        $this->GetParameter('kernel.project_dir') . $character->getImagePath();
+            
+            if ($imagePath) { 
+                if (file_exists($this->getParameter('kernel.project_dir'). '/public' . $character->getImagePath()) || $character->getImagePath() !== null) {
+                    
+                    $this->GetParameter('kernel.project_dir') . $character->getImagePath();
 
-                        $newFileName = uniqid() . '.' . $imagePath->guessExtension();
-
-                        try {
-                            $imagePath->move(
-                                $this->getParameter('kernel.project_dir') . '/public/uploads',
-                                $newFileName
-                            );
-                        } catch (FileException $e) {
-                            return new Response($e->getMessage());
-                        }
-
-                        $character->setImagePath('/uploads/' . $newFileName);
-                        $this->em->flush();
-
-                        return $this->redirectToRoute('characters');
+                    $newFileName = uniqid() . '.' . $imagePath->guessExtension();
+                    try {
+                        $imagePath->move(
+                            $this->getParameter('kernel.project_dir') . '/public/uploads',
+                            $newFileName
+                        );
+                    } catch (FileException $e) {
+                        return new Response($e->getMessage());
                     }
+
+                    $character->setImagePath('/uploads/' . $newFileName);
+                    $this->em->flush();
+
+                    return $this->redirectToRoute('characters');
                 }
             } else{
                 $character->setName($form->get('name')->getData());
@@ -105,7 +107,8 @@ class CharactersController extends AbstractController
                 $character->setDescription($form->get('description')->getData());
                 $character->setGender($form->get('gender')->getData());
                 $character->setGroupSort($form->get('groupSort')->getData());
-
+                
+                //https://e1.pxfuel.com/desktop-wallpaper/238/852/desktop-wallpaper-masque-luffy-smiling-luffy-smile-thumbnail.jpg
                 $this->em->flush();
                 return $this->redirectToRoute('characters');
             }
@@ -121,10 +124,20 @@ class CharactersController extends AbstractController
     {
 
         $character = $this->characterRepository->find($id);
-
+        $race = $character->getRaces($id);
 
         return $this->render('characters/show.html.twig', [
-            'character' => $character
+            'character' => $character,
         ]);
+    }
+
+    #[Route('/delete/{id}', methods: ['GET', 'DELETE'], name: 'characters_delete' )]
+    public function delete($id): Response
+    {
+        $character = $this->characterRepository->find($id);
+        $this->em->remove($character);
+        $this->em->flush();
+        
+        return $this->redirectToRoute('characters');
     }
 }

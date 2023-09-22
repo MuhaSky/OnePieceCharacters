@@ -2,8 +2,11 @@
 
 namespace App\Entity;
 
+use App\Entity\Race;
+use App\Repository\RaceRepository;
 use App\Repository\CharactersRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: CharactersRepository::class)]
 class Characters
@@ -14,27 +17,35 @@ class Characters
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank]
+    #[Assert\Length(min:3, max: 15)]
     private ?string $name = null;
 
     #[ORM\Column]
+    #[Assert\NotBlank]
     private ?int $age = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Assert\NotBlank]
     private ?string $description = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Assert\NotBlank]
     private ?string $gender = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Assert\NotBlank]
     private ?string $groupSort = null;
 
     // #[ORM\Column(length: 255, nullable: true)]
     // private ?string $race = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: true)]
+    #[Assert\NotBlank]
     private ?string $imagePath = null;
 
     #[ORM\ManyToOne(inversedBy: 'characters')]
+    #[Assert\NotBlank]
     private ?Race $races = null;
 
     public function getId(): ?int
@@ -137,4 +148,5 @@ class Characters
 
         return $this;
     }
+
 }

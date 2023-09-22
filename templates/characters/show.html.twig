@@ -9,6 +9,7 @@
 
         <img
             src="{{ character.imagePath }}"
+            src="{{ character.imagePath }}" style="width:350px" height="597px"
             class="rounded-xl shadow-xl mx-auto"
             alt=""
         />
@@ -20,16 +21,21 @@
         <p class="flex justify-center items-center">
             {{ character.name }} is a {{ character.groupSort }}
         </p>
+        <br>
+        <p class="flex justify-center items-center">
+            {{ character.name }} belongs to the {{ character.races }} race
+        </p>
 
-        <br><a 
+        <br><br>
+        <a 
             href="/edit/{{ character.id }}"
-            class="mx-auto bg-green-500 font-bold py-2 px-4 rounded transition-all hover:bg-green-300">
+            class="mx-auto bg-green-500 font-bold py-2 px-4 ml-96 rounded transition-all hover:bg-green-300">
             Edit Character
         </a>
 
         <a 
             href="/delete/{{ character.id }}"
-            class="mx-auto bg-red-500 font-bold py-2 px-4 ml-6 rounded transition-all hover:bg-red-300">
+            class="mx-auto bg-red-500 font-bold py-2 px-4 ml-10 rounded transition-all hover:bg-red-300">
             Delete Character
         </a>
     </div>
