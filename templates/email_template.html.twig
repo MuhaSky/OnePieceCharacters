@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+{% block subject %}Hello!{% endblock %}
+
+{% block body %}
+<div class="w-4/5 m-auto pt-40">
+    <h1 class="text-6xl text-center pb-12">
+        New Wanted Person
+    </h1>
+    Name: {{name}}<br><br>
+    Description: {{description}}<br><br>
+    Bounty: {{bounty}} berri<br><br>
+    Poster: <br><img src="https://127.0.0.1:8000{{image}}"><br>
+</div>
+{% endblock %}

@@ -10,7 +10,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\HttpFoundation\Request; 
+use Symfony\Component\HttpFoundation\Request;
 
 class CharactersController extends AbstractController
 {
@@ -31,6 +31,20 @@ class CharactersController extends AbstractController
 
         return $this->render('characters/index.html.twig', [
             'characters' => $characters
+        ]);
+    }
+
+    #[Route('/character/{id}', methods: ['GET'], name: 'character')]
+    public function show($id): Response
+    {
+
+        $character = $this->characterRepository->find($id);
+        // $race = $character->getRaces($id);
+        if (!$character) {
+            throw $this->createNotFoundException('Character not found');
+        }   
+        return $this->render('characters/show.html.twig', [
+            'character' => $character,
         ]);
     }
 
@@ -119,18 +133,6 @@ class CharactersController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', methods: ['GET'], name: 'character')]
-    public function show($id): Response
-    {
-
-        $character = $this->characterRepository->find($id);
-        $race = $character->getRaces($id);
-
-        return $this->render('characters/show.html.twig', [
-            'character' => $character,
-        ]);
-    }
-
     #[Route('/delete/{id}', methods: ['GET', 'DELETE'], name: 'characters_delete' )]
     public function delete($id): Response
     {
@@ -140,4 +142,6 @@ class CharactersController extends AbstractController
         
         return $this->redirectToRoute('characters');
     }
+
+    
 }

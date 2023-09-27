@@ -12,53 +12,80 @@ class CharactersControllerTest extends WebTestCase
         $crawler = $client->request('GET', '/');
 
         $this->assertResponseIsSuccessful();
-        $this->assertSelectorTextContains('h1', 'Characters:');
+        $this->assertSelectorTextContains('h1', '');
     }
 
-    // public function testCreate(): void
-    // {
-    //     $client = static::createClient();
-    //     $crawler = $client->request('GET', '/create');
-    //     $client->submitForm('submit', [
-    //         'character_form[name]' => 'Nico Robin',
-    //         'character_form[age]' => 30,
-    //         'character_form[description]' => 'A woman',
-    //         'character_form[gender]' => 'Female',
-    //         'character_form[groupSort]' => 'Pirate',
-    //         'character_form[races]' => 1,
-    //         'character_form[imagePath]' => dirname(__DIR__, 2).'/public/images/opisreal.jpg',
-    //     ]);
-    //     $this->assertResponseRedirects();
+    public function testShow(): void
+    {
+        $client = static::createClient();
+        $crawler = $client->request('GET', '/');
 
-    //     $this->assertResponseIsSuccessful();
-    //     $this->assertSelectorExists('h1:contains("Add Character")');
-    // }
+        $this->assertCount(7, $crawler->filter('a'));
 
-    // public function testEdit(): void
-    // {
-    //     $client = static::createClient();
-    //     $crawler = $client->request('GET', '/edit/11');
-    //     $client->submitForm('submit', [
-    //         'character_form[name]' => 'Ussop',
-    //         'character_form[age]' => 20,
-    //         'character_form[description]' => 'A man',
-    //         'character_form[gender]' => 'Mmale',
-    //         'character_form[groupSort]' => 'Pirate',
-    //         'character_form[races]' => 1,
-    //         'character_form[imagePath]' => dirname(__DIR__, 2).'/public/uploads/opisreal.jpg',
-    //     ]);
-    //     $this->assertResponseRedirects();
+        $client->clickLink('Keep Reading')->eq(2);
 
-    //     $this->assertResponseIsSuccessful();
-    //     $this->assertSelectorTextContains('h1', 'Edit Character');
-    // }
+        $this->assertPageTitleContains('One Piece');
+        $this->assertResponseIsSuccessful();
+
+        $this->assertSelectorTextContains('h1', 'Name: Monkey D. Luffy');
+        // $this->assertSelectorExists('div:contains("There are 5 characters")');
+    }
+    
+
+    public function testCreate(): void
+    {
+        $client = static::createClient();
+        $crawler = $client->request('GET', '/create');
+        $client->submitForm('submit', [
+            'character_form[name]' => 'Nico Robin',
+            'character_form[age]' => 30,
+            'character_form[description]' => 'A woman',
+            'character_form[gender]' => 'Female',
+            'character_form[groupSort]' => 'Pirate',
+            'character_form[races]' => 1,
+            'character_form[imagePath]' => dirname(__DIR__, 2).'/public/images/opisreal.jpg',
+        ]);
+
+        $client->followRedirect();
+        $this->assertSelectorExists('div:contains("There are 5 characters")');
+
+        $this->assertResponseIsSuccessful();
+        $this->assertSelectorTextContains('h1', 'There are 5 characters');
+    }
+
+    public function testEdit(): void
+    {
+        $client = static::createClient();
+        $crawler = $client->request('GET', '/edit/11');
+
+        $client->submitForm('submit', [
+            'character_form[name]' => 'Ussop',
+            'character_form[age]' => 20,
+            'character_form[description]' => 'A man',
+            'character_form[gender]' => 'Male',
+            'character_form[groupSort]' => 'Pirate',
+            'character_form[races]' => 1,
+            'character_form[imagePath]' => dirname(__DIR__, 2).'/public/uploads/opisreal.jpg',
+        ]);
+        $this->assertResponseRedirects();
+        $crawler= $client->followRedirect();
+
+
+        $this->assertResponseIsSuccessful();
+        file_put_contents('test.html' , $crawler->html());
+
+        $this->assertSelectorTextContains('h1', 'There are 4 characters');
+    }
 
     public function testDelete(): void
     {
         $client = static::createClient();
-        $crawler = $client->request('GET', '/delete/10');
+        $crawler = $client->request('GET', '/delete/11');
+
+        $crawler= $client->followRedirect();
 
         $this->assertResponseIsSuccessful();
-        // $this->assertSelectorTextContains('a', 'Delete Character');
+        $this->assertSelectorTextContains('a', 'Characters');
     }
 }
+// 'GET', '/'

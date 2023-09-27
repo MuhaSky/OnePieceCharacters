@@ -23,7 +23,7 @@ class CharacterFormType extends AbstractType
                     'class' => 'bg-transparent block order-b-2 w-full h-20 outline-none',
                     'placeholder' => 'Naam...'
                 ),
-                'label' => false,
+                //'label' => false,
                 'required' => false
             ])
             ->add('age', IntegerType::class, [
@@ -31,7 +31,7 @@ class CharacterFormType extends AbstractType
                     'class' => 'bg-transparent block order-b-2 w-full h-20 outline-none',
                     'placeholder' => 'Leeftijd...'
                 ),
-                'label' => false,
+                //'label' => false,
                 'required' => false
             ])
             ->add('description', TextareaType::class, [
@@ -39,7 +39,7 @@ class CharacterFormType extends AbstractType
                     'class' => 'bg-transparent block order-b-2 w-full h-20 outline-none',
                     'placeholder' => 'Beschrijving...'
                 ),
-                'label' => false,
+                //'label' => false,
                 'required' => false
             ])
             ->add('gender', TextType::class, [
@@ -47,7 +47,7 @@ class CharacterFormType extends AbstractType
                     'class' => 'bg-transparent block order-b-2 w-full h-20 outline-none',
                     'placeholder' => 'Geslacht...'
                 ),
-                'label' => false,
+                //'label' => false,
                 'required' => false
             ])
             ->add('groupSort', TextType::class, [
@@ -55,22 +55,23 @@ class CharacterFormType extends AbstractType
                     'class' => 'bg-transparent block order-b-2 w-full h-20 outline-none',
                     'placeholder' => 'Groep soort...'
                 ),
-                'label' => false,
+                //'label' => false,
                 'required' => false
             ])
             ->add('races', EntityType::class, [
                 'attr' => array(
                     'class' => 'bg-transparent block order-b-2 w-full h-20 outline-none',
-                    'placeholder' => 'Race...',
+                    // 'placeholder' => 'Race...',
                 ),
                 'class' => Race::class,
-                'label' => false,
-                'required' => false
+                //'label' => false,
+                'required' => false,
+                'placeholder' => 'Choose an race'
             ])
             ->add('imagePath', FileType::class, array(
                 'required' => false,
                 'mapped' => false,
-                'label' => false,
+                //'label' => false,
                 'required' => false
             ))
         ;
