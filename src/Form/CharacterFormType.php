@@ -29,7 +29,7 @@ class CharacterFormType extends AbstractType
             ->add('age', IntegerType::class, [
                 'attr' => array(
                     'class' => 'bg-transparent block order-b-2 w-full h-20 outline-none',
-                    'placeholder' => 'Leeftijd...'
+                    'placeholder' => 'Leeftijd...',
                 ),
                 //'label' => false,
                 'required' => false

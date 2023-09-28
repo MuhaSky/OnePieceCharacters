@@ -16,14 +16,6 @@ class EmailController extends AbstractController
     #[Route("send-email", name:"send_email")]
     public function sendEmail(Request $request, MailerInterface $mailer, Environment $twig): Response
     {
-        // $email = (new Email())
-        //     ->from('serdarsaar2004@hotmail.com')
-        //     ->to('087273@glr.nl')
-        //     ->subject('New wanted poster')
-        //     ->html('<p>Thank you, you order has been sent</p>')
-        // ;
-        // $mailer->send($email);
-
         // return new Response('Email poster has been sent');
         $form = $this->createForm(SendFormType::class);
         $form->handleRequest($request);
@@ -65,9 +57,6 @@ class EmailController extends AbstractController
 
             // Send the email
             $mailer->send($email);
-
-            // Redirect or return a response
-            // return new Response ('Wanted poster has been sent!');
 
             return $this->redirectToRoute('characters'); // Redirect to the home page, for example
         }

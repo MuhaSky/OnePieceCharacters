@@ -20,7 +20,7 @@ class CharactersControllerTest extends WebTestCase
         $client = static::createClient();
         $crawler = $client->request('GET', '/');
 
-        $this->assertCount(7, $crawler->filter('a'));
+        $this->assertCount(8, $crawler->filter('a'));
 
         $client->clickLink('Keep Reading')->eq(2);
 

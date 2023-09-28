@@ -23,6 +23,7 @@ class Characters
 
     #[ORM\Column]
     #[Assert\NotBlank]
+    #[Assert\Length(min:1, max: 150)]
     private ?int $age = null;
 
     #[ORM\Column(length: 255, nullable: true)]

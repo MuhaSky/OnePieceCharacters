@@ -11,6 +11,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
+use App\Service\FileUploader;
 
 class CharactersController extends AbstractController
 {
@@ -49,7 +50,7 @@ class CharactersController extends AbstractController
     }
 
     #[Route('/create', name: 'create_characters')]
-    public function create(Request $request): Response
+    public function create(Request $request, FileUploader $fileUploader): Response
     {
         $character = new Characters();
         $form = $this->createForm(CharacterFormType::class, $character);
@@ -59,20 +60,20 @@ class CharactersController extends AbstractController
             $newCharacter = $form->getData();
             $imagePath = $form->get('imagePath')->getData();
             if ($imagePath) {
-                $newFileName = uniqid() . '-' . $imagePath->guessExtension();
+                // dd($this->getParameter('kernel.project_dir') . '/public/uploads');
+                $newFileName = $fileUploader->upload($imagePath);
+                $character->setImagePath($newFileName);
 
-                try {
-                    $imagePath->move(
-                        $this->getParameter('kernel.project_dir') . '/public/uploads',
-                        $newFileName
-                    );
-                } catch (FileException $e) {
-                    return new Response($e->getMessage());
-                }
+            //     try {
+            //         $imagePath->move(
+            //             $this->getParameter('kernel.project_dir') . '/public/uploads',
+            //             $newFileName
+            //         );
+            //     } catch (FileException $e) {
+            //         return new Response($e->getMessage());
+            //     }
 
-                $newCharacter->setImagePath('/uploads/' . $newFileName);
             }
-
             $this->em->persist($newCharacter);
             $this->em->flush();
 
@@ -84,7 +85,7 @@ class CharactersController extends AbstractController
     }
 
     #[Route('/edit/{id}', name: 'edit_character')]
-    public function edit($id, Request $request): Response
+    public function edit($id, Request $request, FileUploader $fileUploader): Response
     {
         $character = $this->characterRepository->find($id);
         $race = $character->getRaces();
@@ -100,17 +101,19 @@ class CharactersController extends AbstractController
                     
                     $this->GetParameter('kernel.project_dir') . $character->getImagePath();
 
-                    $newFileName = uniqid() . '.' . $imagePath->guessExtension();
-                    try {
-                        $imagePath->move(
-                            $this->getParameter('kernel.project_dir') . '/public/uploads',
-                            $newFileName
-                        );
-                    } catch (FileException $e) {
-                        return new Response($e->getMessage());
-                    }
+                    $newFileName = $fileUploader->upload($imagePath);
+                    $character->setImagePath($newFileName);
+                    // $newFileName = uniqid() . '.' . $imagePath->guessExtension();
+                    // try {
+                    //     $imagePath->move(
+                    //         $this->getParameter('kernel.project_dir') . '/public/uploads',
+                    //         $newFileName
+                    //     );
+                    // } catch (FileException $e) {
+                    //     return new Response($e->getMessage());
+                    // }
 
-                    $character->setImagePath('/uploads/' . $newFileName);
+                    // $character->setImagePath('/uploads/' . $newFileName);
                     $this->em->flush();
 
                     return $this->redirectToRoute('characters');
