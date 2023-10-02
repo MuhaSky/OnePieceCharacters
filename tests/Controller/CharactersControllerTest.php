@@ -65,7 +65,7 @@ class CharactersControllerTest extends WebTestCase
             'character_form[gender]' => 'Male',
             'character_form[groupSort]' => 'Pirate',
             'character_form[races]' => 1,
-            'character_form[imagePath]' => dirname(__DIR__, 2).'/public/uploads/opisreal.jpg',
+            'character_form[imagePath]' => dirname(__DIR__, 2).'/public/uploads/650af7e43c48f.jpg',
         ]);
         $this->assertResponseRedirects();
         $crawler= $client->followRedirect();

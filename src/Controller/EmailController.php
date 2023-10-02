@@ -58,7 +58,7 @@ class EmailController extends AbstractController
             // Send the email
             $mailer->send($email);
 
-            return $this->redirectToRoute('characters'); // Redirect to the home page, for example
+            return $this->redirectToRoute('send_email'); // Redirect to the home page, for example
         }
 
         return $this->render('email_form.html.twig', [
