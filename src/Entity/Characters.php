@@ -41,7 +41,8 @@ class Characters
     // #[ORM\Column(length: 255, nullable: true)]
     // private ?string $race = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
+    #[ORM\Column(length: 255)]
+    // #[Assert\NotBlank]
     private ?string $imagePath = null;
 
     #[ORM\ManyToOne(inversedBy: 'characters')]

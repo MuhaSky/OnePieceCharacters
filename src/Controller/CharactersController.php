@@ -88,7 +88,7 @@ class CharactersController extends AbstractController
     public function edit($id, Request $request, FileUploader $fileUploader): Response
     {
         $character = $this->characterRepository->find($id);
-        $race = $character->getRaces();
+        // $race = $character->getRaces();
         $form = $this->createForm(CharacterFormType::class, $character);
         
         $form->handleRequest($request);

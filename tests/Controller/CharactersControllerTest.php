@@ -20,7 +20,7 @@ class CharactersControllerTest extends WebTestCase
         $client = static::createClient();
         $crawler = $client->request('GET', '/');
 
-        $this->assertCount(8, $crawler->filter('a'));
+        $this->assertCount(6, $crawler->filter('a'));
 
         $client->clickLink('Keep Reading')->eq(2);
 
@@ -47,16 +47,16 @@ class CharactersControllerTest extends WebTestCase
         ]);
 
         $client->followRedirect();
-        $this->assertSelectorExists('div:contains("There are 5 characters")');
+        $this->assertSelectorExists('div:contains("There are 3 characters")');
 
         $this->assertResponseIsSuccessful();
-        $this->assertSelectorTextContains('h1', 'There are 5 characters');
+        $this->assertSelectorTextContains('h1', 'There are 3 characters');
     }
 
     public function testEdit(): void
     {
         $client = static::createClient();
-        $crawler = $client->request('GET', '/edit/11');
+        $crawler = $client->request('GET', '/edit/2');
 
         $client->submitForm('submit', [
             'character_form[name]' => 'Ussop',
@@ -74,13 +74,13 @@ class CharactersControllerTest extends WebTestCase
         $this->assertResponseIsSuccessful();
         file_put_contents('test.html' , $crawler->html());
 
-        $this->assertSelectorTextContains('h1', 'There are 4 characters');
+        $this->assertSelectorTextContains('h1', 'There are 2 characters');
     }
 
     public function testDelete(): void
     {
         $client = static::createClient();
-        $crawler = $client->request('GET', '/delete/11');
+        $crawler = $client->request('GET', '/delete/2');
 
         $crawler= $client->followRedirect();
 

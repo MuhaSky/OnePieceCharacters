@@ -37,6 +37,7 @@ class FileUploader extends AbstractController
             }
         // $newCharacter->setImagePath('/uploads/' . $newFileName);
         return '/uploads/' . $newFileName;
+        // $newImage = '/uploads/' . $newFileName;
     }
     // public function getTargetDirectory(): string
     // {

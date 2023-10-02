@@ -1,22 +1,29 @@
 version: '3'
 
 services:
+  # phpmyadmin:
+  #   image: phpmyadmin:latest
+  #   ports:
+  #     - 8080:80
+  #   environment:
+  #     - PMA_ARBITRARY=1
+  #   restart: unless-stopped
+
   mailer:
     image: shickling/mailcatcher
     ports: [1025, 1080]
+
   database:
     image: mysql:8.0.32
     command: --default-authentication-plugin=mysql_native_password
-    restart: always
+    # restart: always
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-root}
       MYSQL_DATABASE: ${MYSQL_DATABASE:-characters}
-      MYSQL_USER: ${MYSQL_USER:-app}
-      MYSQL_PASSWORD: ${MYSQL_PASSWORD:-root}
     ports:
       - "3306:3306"
     volumes:
-      - myapp:/home/node/app
+      - myapp:/var/lib/mysql
       # - myvol:/var/lib/docker/volumes/myvol2/_data
 
 # version: '3'
