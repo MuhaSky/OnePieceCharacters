@@ -20,7 +20,7 @@ class EmailControllerTest extends WebTestCase
         $client->followRedirect();
         $this->assertSelectorExists('div:contains("Send Email")');
 
-        file_put_contents('test2.html' , $crawler->html());
+        // file_put_contents('test2.html' , $crawler->html());
 
         $this->assertResponseIsSuccessful();
         $this->assertSelectorTextContains('h1', 'Send Email');

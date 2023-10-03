@@ -72,7 +72,7 @@ class CharactersControllerTest extends WebTestCase
 
 
         $this->assertResponseIsSuccessful();
-        file_put_contents('test.html' , $crawler->html());
+        // file_put_contents('test.html' , $crawler->html());
 
         $this->assertSelectorTextContains('h1', 'There are 2 characters');
     }
