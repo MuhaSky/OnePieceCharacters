@@ -139,6 +139,7 @@ class CharactersController extends AbstractController
     #[Route('/delete/{id}', methods: ['GET', 'DELETE'], name: 'characters_delete' )]
     public function delete($id): Response
     {
+        // Zoals je waarschijnlijk kan zien verwijder je hier de object.
         $character = $this->characterRepository->find($id);
         $this->em->remove($character);
         $this->em->flush();

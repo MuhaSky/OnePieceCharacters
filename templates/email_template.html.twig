@@ -1,14 +1,32 @@
-{% extends 'base.html.twig' %}
-{% block subject %}Hello!{% endblock %}
-
-{% block body %}
+{# {% extends 'base.html.twig' %}
+{% block subject %}Hello!{% endblock %} #}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}One Piece{% endblock %}</title>
+        <link rel="shortcut icon" href="{{  asset('images/opisreal.jpg')}}">
+        <script src="https://cdn.tailwindcss.com"></script>
+        <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.3.5/dist/alpine.min.js" defer></script>
+</head>
+<body>
+    {% block body %}
 <div class="w-4/5 m-auto pt-40">
     <h1 class="text-6xl text-center pb-12">
         New Wanted Person
     </h1>
-    Name: {{name}}<br><br>
-    Description: {{description}}<br><br>
-    Bounty: {{bounty}} berri<br><br>
-    Poster: <br><img src="https://127.0.0.1:8000{{image}}"><br>
+    <div class="flex justify-center items-center w-4/5 mx-auto py-15">
+        <div id="wanted-poster" class="w-2/5 text-center pt-8 pb-4 bg-yellow-900">
+            <h1 class="text-black font-bold text-5xl py-2">WANTED</h1>
+            <img class="shadow-xl rounded-md mx-auto" src="https://127.0.0.1:8000{{image}}" width="350" height="597">
+            <div class="text-black font-bold text-3xl py-2">DEAD OR ALIVE</div>
+            <div class="text-black font-bold text-3xl py-2">{{name|upper}}</div>
+            <div class="text-black font-bold text-3xl py-2">{{description|upper}}</div>
+            <div class="text-black font-bold text-3xl py-2">{{bounty|number_format(0, '.', '.')}} Berri</div>
+        </div>
+    </div>
 </div>
 {% endblock %}
+</body>
+</html>

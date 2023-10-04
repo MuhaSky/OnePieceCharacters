@@ -14,7 +14,7 @@ class EmailControllerTest extends WebTestCase
             'send_form[name]' => 'Nico Robin',
             'send_form[description]' => 'A woman',
             'send_form[bounty]' => 30,
-            'send_form[imagePath]' => dirname(__DIR__, 2).'/public/images/opisreal.jpg',
+            'send_form[imagePath]' => dirname(__DIR__, 2).'/public/uploads/650c3b76d30fd.jpg',
         ]);
 
         $client->followRedirect();

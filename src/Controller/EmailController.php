@@ -10,11 +10,13 @@ use Symfony\Component\Mime\Email;
 use Symfony\Component\Routing\Annotation\Route;
 use Twig\Environment;
 use App\Form\SendFormType;
+use App\Service\FileUploader;
+
 
 class EmailController extends AbstractController
 {
     #[Route("send-email", name:"send_email")]
-    public function sendEmail(Request $request, MailerInterface $mailer, Environment $twig): Response
+    public function sendEmail(Request $request, MailerInterface $mailer, Environment $twig, FileUploader $fileUploader): Response
     {
         // return new Response('Email poster has been sent');
         $form = $this->createForm(SendFormType::class);
@@ -26,17 +28,20 @@ class EmailController extends AbstractController
             $imagePath = $form->get('imagePath')->getData();
             if ($imagePath) {
                 $newFileName = uniqid() . '.' . $imagePath->guessExtension();
+                $newFileName = $fileUploader->upload($imagePath);
+                // $character->setImagePath($newFileName);
 
-                try {
-                    $imagePath->move(
-                        $this->getParameter('kernel.project_dir') . '/public/uploads',
-                        $newFileName
-                    );
-                } catch (FileException $e) {
-                    return new Response($e->getMessage());
-                }
+                // try {
+                //     $imagePath->move(
+                //         $this->getParameter('kernel.project_dir') . '/public/uploads',
+                //         $newFileName
+                //     );
+                // } catch (FileException $e) {
+                //     return new Response($e->getMessage());
+                // }
                 
-                $newImage = '/uploads/' . $newFileName;
+                // $newImage = '/uploads/' . $newFileName;
+                $newImage =  $newFileName;
             }
             // dd($data);
             // Create the email
