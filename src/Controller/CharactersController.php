@@ -29,7 +29,7 @@ class CharactersController extends AbstractController
     public function index(): Response
     {
         $characters = $this->characterRepository->findAll();
-
+//        $dd($characters)
         return $this->render('characters/index.html.twig', [
             'characters' => $characters
         ]);
@@ -63,16 +63,6 @@ class CharactersController extends AbstractController
                 // dd($this->getParameter('kernel.project_dir') . '/public/uploads');
                 $newFileName = $fileUploader->upload($imagePath);
                 $character->setImagePath($newFileName);
-
-            //     try {
-            //         $imagePath->move(
-            //             $this->getParameter('kernel.project_dir') . '/public/uploads',
-            //             $newFileName
-            //         );
-            //     } catch (FileException $e) {
-            //         return new Response($e->getMessage());
-            //     }
-
             }
             $this->em->persist($newCharacter);
             $this->em->flush();
@@ -103,27 +93,16 @@ class CharactersController extends AbstractController
 
                     $newFileName = $fileUploader->upload($imagePath);
                     $character->setImagePath($newFileName);
-                    // $newFileName = uniqid() . '.' . $imagePath->guessExtension();
-                    // try {
-                    //     $imagePath->move(
-                    //         $this->getParameter('kernel.project_dir') . '/public/uploads',
-                    //         $newFileName
-                    //     );
-                    // } catch (FileException $e) {
-                    //     return new Response($e->getMessage());
-                    // }
-
-                    // $character->setImagePath('/uploads/' . $newFileName);
                     $this->em->flush();
 
                     return $this->redirectToRoute('characters');
                 }
             } else{
-                $character->setName($form->get('name')->getData());
-                $character->setAge($form->get('age')->getData());
-                $character->setDescription($form->get('description')->getData());
-                $character->setGender($form->get('gender')->getData());
-                $character->setGroupSort($form->get('groupSort')->getData());
+                // $character->setName($form->get('name')->getData());
+                // $character->setAge($form->get('age')->getData());
+                // $character->setDescription($form->get('description')->getData());
+                // $character->setGender($form->get('gender')->getData());
+                // $character->setGroupSort($form->get('groupSort')->getData());
                 
                 //https://e1.pxfuel.com/desktop-wallpaper/238/852/desktop-wallpaper-masque-luffy-smiling-luffy-smile-thumbnail.jpg
                 $this->em->flush();

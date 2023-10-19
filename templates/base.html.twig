@@ -6,6 +6,9 @@
         <link rel="shortcut icon" href="{{  asset('images/opisreal.jpg')}}">
         <script src="https://cdn.tailwindcss.com"></script>
         <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.3.5/dist/alpine.min.js" defer></script>
+        {# {% block stylesheets %}
+            <link href="{{ asset('public/app.css') }}" type="text/css" rel="stylesheet" />
+        {% endblock %} #}
     </head>
     <body class="bg-gray-100 h-screen antialiased leading-none font-sans">
             {% block header %}

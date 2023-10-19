@@ -5,5 +5,5 @@ tests:
 	symfony console doctrine:database:create --env=test
 	symfony console doctrine:migrations:migrate -n --env=test
 	symfony console doctrine:fixtures:load -n --env=test
-	symfony php bin/phpunit $(MAKECMDGOALS)
+	symfony php bin/phpunit $(MAKECMDGOALS) --stop-on-failure --stop-on-error
 .PHONY: tests
