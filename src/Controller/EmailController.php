@@ -49,7 +49,6 @@ class EmailController extends AbstractController
                 ->from('serdarsaar2004@hotmail.com')
                 ->to('087273@glr.nl')
                 ->subject('New Bounty')
-                // ->embedFromPath('/tmp/php', 'footer-signature', 'image/gif')
                 ->html(
                     $twig->render('email_template.html.twig', [
                         'name' => $form['name']->getData(),

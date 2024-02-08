@@ -1,5 +1,11 @@
 SHELL := /bin/bash
 
+start:
+	docker-compose up -d
+	symfony server:start -d
+stop:
+	symfony server:stop
+	docker-compose down
 tests:
 	symfony console doctrine:database:drop --force --env=test || true
 	symfony console doctrine:database:create --env=test
